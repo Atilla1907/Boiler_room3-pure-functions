@@ -1,4 +1,4 @@
-// my movie data 
+// Sample movie data
 const movies = [
   { id: 1, title: "JoJo's Bizarre Adventure", genre: "Action", year: 2012, ratings: [9, 8, 10, 9, 8] },
   { id: 2, title: "Initial D", genre: "Racing", year: 1998, ratings: [8, 9, 7, 8, 8] },
@@ -6,7 +6,7 @@ const movies = [
   { id: 4, title: "Dragon Ball Z", genre: "Action", year: 1989, ratings: [8, 9, 8, 7, 9] }
 ];
 
-// utility functions
+// Helper to calculate average rating
 function calculateAverage(ratings) {
   let sum = 0;
   for (let r of ratings) {
@@ -14,40 +14,30 @@ function calculateAverage(ratings) {
   }
   return sum / ratings.length;
 }
-// add average rating to each movie
+// Add average rating to each movie
 function addAverageRating(movie) {
   return {
     ...movie,
     averageRating: calculateAverage(movie.ratings)
   };
 }
-// filter movies by genre
-function filterByGenre(genre, movies) {
-  return movies.filter(m => m.genre === genre);
-}
-// filter movies by year
-function filterByYear(minYear, movies) {
-  return movies.filter(m => m.year >= minYear);
-}
-// sort movies by average rating
+// Sort movies by average rating descending
 function sortByRating(movies) {
   return [...movies].sort((a, b) => b.averageRating - a.averageRating);
 }
 
- // function composition utility
+// Higher order function: pipe
 function pipe(...functions) {
   return function (input) {
     return functions.reduce((acc, fn) => fn(acc), input);
   };
 }
 
-// processing pipeline 
+// Process movies: add average rating and sort
 const processMovies = pipe(
-  (list) => filterByGenre("Action", list),
-  (list) => filterByYear(1990, list),
   (list) => list.map(addAverageRating),
   sortByRating
 );
 
 console.log(processMovies(movies));
-// output the result
+// To run: node index.js
