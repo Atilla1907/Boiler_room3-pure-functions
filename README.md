@@ -1,1 +1,1 @@
-# Boiler_room3-pure-functions
+run node index.js to test
